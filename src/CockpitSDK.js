@@ -207,8 +207,13 @@ class CockpitSDK {
   }
 
   // @param {string} regionName
-  regionData(regionName) {
-    return this.fetchData(`/api/regions/data/${regionName}`, { method: 'GET' });
+  // @param {Request} options
+  regionData(regionName, options) {
+    return this.fetchData(`/api/regions/data/${regionName}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: this.stringifyOptions(options),
+    });
   }
 
   // @param {string} regionName
@@ -216,7 +221,7 @@ class CockpitSDK {
   region(regionName, options) {
     return {
       data: (success, error) => {
-        this.regionData(regionName)
+        this.regionData(regionName, options)
           .then(success)
           .catch(error);
       },
