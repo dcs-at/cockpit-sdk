@@ -211,8 +211,9 @@ class CockpitSDK {
     return this.fetchData(`/api/regions/data/${regionName}`, { method: 'GET' });
   }
 
-  // @param {string} collectionName
-  region(regionName) {
+  // @param {string} regionName
+  // @param {Request} options
+  region(regionName, options) {
     return {
       data: (success, error) => {
         this.regionData(regionName)
@@ -221,7 +222,7 @@ class CockpitSDK {
       },
 
       get: (success, error) => {
-        this.regionGet(regionName)
+        this.regionGet(regionName, options)
           .then(success)
           .catch(error);
       },
