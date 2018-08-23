@@ -225,6 +225,41 @@ class CockpitSDK {
     };
   }
 
+  // @param {string} pageName
+  pageGet(pageName) {
+    return this.fetchDataText(`/api/pages/get/${pageName}`, {
+      method: 'GET',
+    });
+  }
+
+  pageList() {
+    return this.fetchData(`/api/pages/listPages`, {
+      method: 'GET',
+    });
+  }
+
+  // @param {string} pageName
+  pageData(pageName) {
+    return this.fetchData(`/api/pages/data/${pageName}`, { method: 'GET' });
+  }
+
+  // @param {string} pageName
+  page(pageName) {
+    return {
+      data: (success, error) => {
+        this.pageData(pageName)
+          .then(success)
+          .catch(error);
+      },
+
+      get: (success, error) => {
+        this.pageGet(pageName)
+          .then(success)
+          .catch(error);
+      },
+    };
+  }
+
   assets(options) {
     return this.fetchData(
       '/api/cockpit/assets',
